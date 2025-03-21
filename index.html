@@ -1,1 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Gaming World</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        header {
+            background-color: #2e3b4e;
+            padding: 20px;
+            color: white;
+            position: fixed;
+            top: 0;
+            right: 0;
+            left: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: flex-end;
+        }
+        header nav ul {
+            list-style: none;
+            display: flex;
+        }
+        header nav ul li {
+            margin-left: 20px;
+        }
+        header nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+        }
+        section {
+            padding: 60px 20px;
+        }
+        .intro {
+            text-align: center;
+            background-color: #333;
+            color: white;
+            padding: 50px 0;
+        }
+        .games-section {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+        .game-logo {
+            margin: 20px;
+            cursor: pointer;
+            width: 150px;
+            height: 150px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .game-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .game-embed-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 999;
+            justify-content: center;
+            align-items: center;
+        }
+        .game-embed {
+            width: 80%;
+            height: 80%;
+            position: relative;
+        }
+        .game-embed iframe {
+            width: 100%;
+            height: 100%;
+        }
+        .back-button {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: #fff;
+            color: #333;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            border-radius: 5px;
+        }
+        .hall-of-fame, .settings {
+            margin-top: 40px;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #333;
+            color: white;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header with Navigation -->
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#games">Games</a></li>
+                <li><a href="#hall-of-fame">Hall of Fame</a></li>
+                <li><a href="#settings" onclick="openSettings()">Settings</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Homepage Section (Can Add Custom Content) -->
+    <section id="home" class="intro">
+        <h2>Welcome to Gaming World</h2>
+        <p>Your ultimate destination for all things gaming. Here, you'll find games, a Hall of Fame, and much more!</p>
+    </section>
+
+    <!-- Games Section (Clickable Logos for Embedded Games) -->
+    <section id="games" class="games-section">
+        <h2>Featured Games</h2>
+        <!-- Game 1 Logo -->
+        <div class="game-logo" onclick="openGame('https://www.example.com/embedded-game-1')">
+            <img src="https://via.placeholder.com/150x150?text=Game+1" alt="Game 1">
+        </div>
+        <!-- Game 2 Logo -->
+        <div class="game-logo" onclick="openGame('https://www.example.com/embedded-game-2')">
+            <img src="https://via.placeholder.com/150x150?text=Game+2" alt="Game 2">
+        </div>
+        <!-- Game 3 Logo -->
+        <div class="game-logo" onclick="openGame('https://www.example.com/embedded-game-3')">
+            <img src="https://via.placeholder.com/150x150?text=Game+3" alt="Game 3">
+        </div>
+        <!-- Add more games as needed -->
+    </section>
+
+    <!-- Hall of Fame Section (Placeholder for Content) -->
+    <section id="hall-of-fame" class="hall-of-fame">
+        <h2>Hall of Fame</h2>
+        <p>This section will feature the top gamers, achievements, and more!</p>
+        <ul>
+            <li>Top Gamer 1 - Score: 10,000</li>
+            <li>Top Gamer 2 - Score: 9,500</li>
+            <li>Top Gamer 3 - Score: 9,000</li>
+        </ul>
+    </section>
+
+    <!-- Settings Section -->
+    <section id="settings" class="settings">
+        <h2>Settings</h2>
+        <p>Click below to open a blank tab with all website content:</p>
+        <button onclick="openAboutBlank()">Open About:Blank Tab</button>
+    </section>
+
+    <!-- Game Embed Container -->
+    <div class="game-embed-container" id="game-embed-container">
+        <div class="game-embed">
+            <button class="back-button" onclick="closeGame()">Back</button>
+            <iframe id="game-frame" src="" frameborder="0"></iframe>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Gaming World. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Function to open the embedded game in a fullscreen overlay
+        function openGame(url) {
+            document.getElementById('game-embed-container').style.display = 'flex';
+            document.getElementById('game-frame').src = url;
+        }
+
+        // Function to close the game overlay
+        function closeGame() {
+            document.getElementById('game-embed-container').style.display = 'none';
+            document.getElementById('game-frame').src = ''; // Clear the iframe source
+        }
+
+        // Function to open a blank tab with the website content
+        function openAboutBlank() {
+            const newWindow = window.open('about:blank', '_blank');
+            newWindow.document.write('<html><head><title>Gaming World</title></head><body>');
+            newWindow.document.write('<h1>Welcome to Gaming World</h1>');
+            newWindow.document.write('<p>Your ultimate destination for all things gaming.</p>');
+            newWindow.document.write('<h2>Featured Games</h2>');
+            newWindow.document.write('<div class="game-embed"><iframe src="https://www.example.com/embedded-game-1" title="Game 1"></iframe></div>');
+            newWindow.document.write('<div class="game-embed"><iframe src="https://www.example.com/embedded-game-2" title="Game 2"></iframe></div>');
+            newWindow.document.write('<h2>Hall of Fame</h2>');
+            newWindow.document.write('<ul><li>Top Gamer 1 - Score: 10,000</li><li>Top Gamer 2 - Score: 9,500</li><li>Top Gamer 3 - Score: 9,000</li></ul>');
+            newWindow.document.write('</body></html>');
+            newWindow.document.close();
+        }
+    </script>
+
+</body>
+</html>
 
